@@ -1,0 +1,20 @@
+[submodule "trx"]
+	path = osmocom/trx
+	url = https://gitea.osmocom.org/phone-side/osmocom-bb
+	branch = fixeria/trx
+[submodule "libosmo-dsp"]
+	path = osmocom/libosmo-dsp
+	url = https://gitea.osmocom.org/sdr/libosmo-dsp
+	branch = master
+[submodule "libosmocore"]
+	path = osmocom/libosmocore
+	url = https://gitea.osmocom.org/osmocom/libosmocore.git
+	branch = master
+[submodule "libosmo-cc"]
+	path = osmocom/libosmo-cc
+	url = https://gitea.osmocom.org/cc/libosmo-cc
+	branch = master
+[submodule "osmocom-analog"]
+	path = osmocom/osmocom-analog
+	url = https://gitea.osmocom.org/cellular-infrastructure/osmocom-analog
+	branch = master

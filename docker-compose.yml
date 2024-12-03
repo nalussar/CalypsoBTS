@@ -1,0 +1,11 @@
+services:
+  builder-1:
+    container_name: builder-1
+    hostname: builder-1
+    privileged: true
+    image: registry.nicko.su:5000/osmocom_arm_build
+    volumes:
+      - ./osmocom:/opt/osmocom:rw
+    env_file:
+      - .env
+

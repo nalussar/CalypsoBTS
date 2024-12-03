@@ -1,0 +1,27 @@
+x-logging: &logging
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  osmocom1:
+    container_name: osmocom1
+    hostname: osmocom1
+    domainname: nicko.su
+    privileged: true
+    env_file:
+      - .env
+    ulimits: 
+      memlock: -1
+    build:
+      context: .
+      args:
+        - CUID=${CUID}
+        - CGID=${CGID}
+        - USER_NAME=${USER_NAME}
+      dockerfile: Dockerfile_osmocom1
+    <<: *logging
+    volumes:
+      - ./osmocom:/opt/osmocom:rw

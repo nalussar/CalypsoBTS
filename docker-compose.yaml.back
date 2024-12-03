@@ -1,0 +1,27 @@
+version: "3.3"
+
+x-logging: &logging
+  logging:
+    driver: "json-file"
+    options:
+      max-size: "10m"
+      max-file: "3"
+
+services:
+  dra_srv:
+    container_name: osmocom_build
+    hostname: osmocom_build
+    user: ${USER_NAME}:${USER_NAME}
+    #    image: docker-registry.nexign.com/shared/fmc/nwm-dra/dra-srv:latest
+    build: 
+      context: .
+      args:
+        - CUID
+        - CGID
+        - USER_NAME
+    env_file:
+      - .env
+    volumes:
+      - ./osmocom:/opt/osmocom:rw
+    <<: *logging
+
