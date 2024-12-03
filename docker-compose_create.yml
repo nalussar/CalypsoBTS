@@ -1,0 +1,18 @@
+
+services:
+  builder-1:
+    container_name: builder-1
+    hostname: builder-1
+    privileged: true
+    build:
+      args:
+        - CUID=${CUID}
+        - CGID=${CGID}
+        - USER_NAME=${USER_NAME}
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./osmocom:/opt/osmocom:rw
+    env_file:
+      - .env
+

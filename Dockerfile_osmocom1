@@ -1,0 +1,42 @@
+FROM ubuntu:latest
+ARG CUID
+ARG CGID
+ARG USER_NAME
+RUN echo $CUID
+RUN echo $CGID
+RUN echo $USER_NAME
+RUN echo 
+RUN apt -y update 
+ENV PKG_CONFIG_PATH=/usr/local/lib/pkgconfig
+RUN apt-get install -y sudo wget git build-essential python3 libusb-1.0 pkg-config m4 libtool automake autoconf libgmp3-dev libmpfr-dev libx11-6 libx11-dev texinfo flex bison \
+    libncurses-dev libncursesw5-dev zlib1g-dev libmpc-dev libpcsclite-dev libtalloc-dev libortp-dev libsctp-dev \
+    libmnl-dev libdbi-dev libdbd-sqlite3 libsqlite3-dev sqlite3 libc-ares-dev libxml2-dev libssl-dev libfftw3-dev putty minicom libudev-dev \
+    shtool make gcc gnutls-dev libusb-dev libmnl-dev extrepo
+RUN extrepo enable osmocom-nightly
+RUN apt -y update 
+RUN mkdir /opt/osmocom
+RUN addgroup --force-badname --gid $CGID  $USER_NAME
+RUN adduser --force-badname --uid $CUID --gid $CGID --disabled-password --gecos ""  $USER_NAME
+RUN echo "$USER_NAME ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers 
+RUN chown -R $USER_NAME:$USER_NAME /home/$USER_NAME
+RUN chown -R $USER_NAME:$USER_NAME /opt/*
+WORKDIR /opt/osmocom
+RUN echo "Insalling liburing"
+RUN git clone https://github.com/axboe/liburing.git
+WORKDIR /opt/osmocom/liburing
+RUN ./configure --cc=gcc --cxx=g++
+RUN make
+RUN make liburing.pc
+RUN sudo make install
+RUN ldconfig -i
+WORKDIR /opt/osmocom
+RUN echo "Getting sources"
+RUN git clone https://gitea.osmocom.org/osmocom/libosmocore
+WORKDIR /opt/osmocom/libosmocore
+RUN autoreconf -f -i
+RUN ./configure
+RUN make
+RUN make install
+RUN ldconfig -i
+WORKDIR /opt/osmocom
+CMD tail -f /dev/null

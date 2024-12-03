@@ -1,0 +1,8 @@
+[submodule "trx"]
+	path = osmocom/trx
+	url = https://gitea.osmocom.org/phone-side/osmocom-bb
+	branch = fixeria/trx
+[submodule "libosmo-dsp"]
+	path = osmocom/libosmo-dsp
+	url = https://gitea.osmocom.org/phone-side/osmocom-bb
+	branch = master
