@@ -1,4 +1,12 @@
 #!/bin/bash
+set -ex
+cd libosmo-gprs/
+autoreconf -if
+./configure
+make
+make install
+ldconfig -i
+cd ..
 cd libosmo-dsp/
 autoreconf -if
 ./configure
